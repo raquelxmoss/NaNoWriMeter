@@ -7,11 +7,14 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+
 <% if current_user %>
 	You are signed in as <%= current_user.github_username %>
 <% else %>
   <%= link_to "Sign in with Github", user_omniauth_authorize_path(:github) %>
+  <%= link_to("Development sign in", dev_sign_in_path, method: 'post') if Rails.env.development? %>
 <% end %>
+
   <%= yield %>
 </body>
 </html>
