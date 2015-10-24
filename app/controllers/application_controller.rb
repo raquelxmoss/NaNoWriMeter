@@ -3,6 +3,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  def index
+  end
+
   def get_files
     response = HTTParty.get("#{Rails.application.secrets.github_endpoint}/#{current_user.github_username}/#{current_user.repo_name}/contents")
     response.each { |file| get_file_contents(file) }

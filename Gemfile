@@ -22,6 +22,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'd3-rails'
 gem 'httparty'
 gem 'devise'
+gem 'omniauth'
 gem 'omniauth-github'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

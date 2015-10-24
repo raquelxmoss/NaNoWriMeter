@@ -7,8 +7,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+  <%= link_to "Sign in with Github", user_omniauth_authorize_path(:github) %>
+  <%= yield %>
 </body>
 </html>
