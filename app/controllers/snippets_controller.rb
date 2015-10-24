@@ -1,6 +1,6 @@
 require 'open-uri'
 
-class Users::SnippetsController < ApplicationController
+class SnippetsController < ApplicationController
 
 	before_action :authenticate_user!
 
@@ -10,6 +10,9 @@ class Users::SnippetsController < ApplicationController
 
 	def show
 		@snippet = Snippet.find(params[:snippet_id])
+	end
+
+	def new
 	end
 
 	def create
