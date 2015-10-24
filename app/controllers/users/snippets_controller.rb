@@ -1,6 +1,6 @@
 require 'open-uri'
 
-class SnippetsController < ApplicationController
+class Users::SnippetsController < ApplicationController
 
 	before_action :authenticate_user!
 
