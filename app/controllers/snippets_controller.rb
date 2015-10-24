@@ -34,6 +34,7 @@ private
 	  diff = open(url) { |diff_file| diff_file.read }
 		  .split("\n")
 		  .select { |line| line.start_with?('+') }
+		  .reject { |line| line.start_with?('++') }
 		  .map { |line| line.slice(1..-1) }
 		  .join("\n")
 	end
