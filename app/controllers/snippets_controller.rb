@@ -33,7 +33,7 @@ private
 		url = "#{repo}/compare/master%40%7B1day%7D...master.diff"
 	  diff = open(url) { |diff_file| diff_file.read }
 		  .split("\n")
-		  .select { |line| line.start_with?('+ ') }
+		  .select { |line| line.start_with?('+') }
 		  .map { |line| line.slice(1..-1) }
 		  .join("\n")
 	end
