@@ -17,7 +17,7 @@ class SnippetsController < ApplicationController
 
 	def create
 		diff = get_diff(current_user.repo)
-		current_user.snippets.create(body: diff, word_count: diff.length)
+		current_user.snippets.create(body: diff, word_count: diff.split.length)
 		redirect_to user_snippets_path(current_user)
 	end
 
