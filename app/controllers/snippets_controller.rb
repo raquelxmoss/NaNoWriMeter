@@ -16,8 +16,13 @@ class SnippetsController < ApplicationController
 	end
 
 	def create
-		diff = get_diff(current_user.repo)
-		current_user.snippets.create(body: diff, word_count: diff.length) unless current_user.snippets.find_by_body(diff)
+		snippets = get_diff(current_user.repo)
+		snippets.each do |snippet|
+			unless current_user.snippets.find_by_body(snippet)
+				current_user.snippets.create(body: snippet, word_count: snippet.length)
+				current_user.update(last_submit: DateTime.iso8601(DateTime.now.to_s))
+			end
+		end
 		redirect_to user_snippets_path(current_user)
 	end
 
@@ -30,13 +35,18 @@ class SnippetsController < ApplicationController
 private
 	
 	def get_diff(repo)
-		url = "#{repo}/compare/master%40%7B1day%7D...master.diff"
-	  diff = open(url) { |diff_file| diff_file.read }
-		  .split("\n")
-		  .select { |line| line.start_with?('+') }
-		  .reject { |line| line.start_with?('++') }
-		  .map { |line| line.slice(1..-1) }
-		  .join("\n")
+		snippets = []
+		commits = "#{repo}/commits?since=#{last_submit.to_s}"
+		commits.map {|commit| commit.url }.each do |url|
+		  diff = open("#{url}.diff") { |diff_file| diff_file.read }
+			  .split("\n")
+			  .select { |line| line.start_with?('+') }
+			  .reject { |line| line.start_with?('++') }
+			  .map { |line| line.slice(1..-1) }
+			  .join("\n")
+		  snippets << diff
+		end
+		snippets
 	end
 
 end
