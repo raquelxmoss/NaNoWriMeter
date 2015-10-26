@@ -20,7 +20,7 @@ class SnippetsController < ApplicationController
 		snippets.each do |snippet|
 			unless current_user.snippets.find_by_body(snippet)
 				current_user.snippets.create(body: snippet, word_count: snippet.length)
-				current_user.update(last_submit: DateTime.iso8601(DateTime.now.to_s))
+				current_user.update(last_submit: DateTime.now)
 			end
 		end
 		redirect_to user_snippets_path(current_user)
@@ -36,8 +36,8 @@ private
 	
 	def get_diff(repo)
 		snippets = []
-		commits = "#{repo}/commits?since=#{last_submit.to_s}"
-		commits.map {|commit| commit.url }.each do |url|
+		commits = HTTParty.get("https://api.github.com/repos/#{current_user.github_username}/#{repo}/commits?since=#{current_user.last_submit.to_s}")
+		commits.map{|c|c["html_url"]}.each do |url|
 		  diff = open("#{url}.diff") { |diff_file| diff_file.read }
 			  .split("\n")
 			  .select { |line| line.start_with?('+') }
