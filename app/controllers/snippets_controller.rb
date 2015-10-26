@@ -19,7 +19,7 @@ class SnippetsController < ApplicationController
 		snippets = get_diff(current_user.repo)
 		snippets.each do |snippet|
 			unless current_user.snippets.find_by_body(snippet)
-				current_user.snippets.create(body: snippet, word_count: snippet.length)
+				current_user.snippets.create(body: snippet, word_count: snippet.split.length)
 				current_user.update(last_submit: DateTime.now)
 			end
 		end
