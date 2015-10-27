@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151025050207) do
+ActiveRecord::Schema.define(version: 20151027060029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,8 +21,9 @@ ActiveRecord::Schema.define(version: 20151025050207) do
     t.text     "body"
     t.integer  "word_count"
     t.string   "repo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.text     "commit_message"
   end
 
   add_index "snippets", ["user_id"], name: "index_snippets_on_user_id", using: :btree
