@@ -7,7 +7,6 @@ class User < ActiveRecord::Base
  has_many :snippets
 
   def self.from_omniauth(auth)
-    binding.pry
     where(
       :github_username => auth[:info][:nickname]
       ).first_or_create do |user|
