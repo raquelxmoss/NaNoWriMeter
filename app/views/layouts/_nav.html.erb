@@ -1,0 +1,10 @@
+<ul>
+	<% if current_user %>
+		Welcome, <%= current_user.github_username %>
+		<li><%= link_to 'Settings', user_settings_path(current_user) %></li>
+		<li><%= link_to 'My Snippets', user_snippets_path(current_user) %></li>
+	<% else %>
+	  <%= link_to "Sign in with Github", user_omniauth_authorize_path(:github) %>
+	  <%= link_to("Development sign in", dev_sign_in_path, method: 'post') if Rails.env.development? %>
+	<% end %>
+</ul>
