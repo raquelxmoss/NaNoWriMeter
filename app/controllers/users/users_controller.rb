@@ -6,11 +6,11 @@ class Users::UsersController < ApplicationController
 
 	def update
 		if @user.update(user_params)
-			flash[:notice] = "Your settings were updated"
+			notice = "Your settings were updated"
 		else
-	    flash[:notice] = "Sorry, something went wrong!"
+	    notice = "Sorry, something went wrong!"
 		end
-		redirect_to user_settings_path
+		redirect_to user_settings_path flash: { notice: notice}
 	end
 
 private
