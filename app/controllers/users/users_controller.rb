@@ -9,7 +9,7 @@ class Users::UsersController < ApplicationController
 			flash[:notice] = "Your settings were updated"
 			redirect_to user_settings_path
 		else
-	    flash[:notice] = "Sorry, something went wrong!"
+			flash[:notice] = "Sorry, something went wrong!"
 			redirect_to :back
 		end
 	end
