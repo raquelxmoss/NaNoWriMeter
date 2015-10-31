@@ -17,7 +17,7 @@ class Users::UsersController < ApplicationController
 private
 
 	def get_user
-		@user = User.find(params[:user_id])
+		@user = current_user
 	end
 
 	def user_params
