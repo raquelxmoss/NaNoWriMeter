@@ -9,7 +9,7 @@ class Users::UsersController < ApplicationController
 			flash[:notice] = "Your settings were updated"
 			redirect_to user_settings_path
 		else
-			flash[:notice] = @user.errors.full_messages
+			flash[:notice] = @user.errors.full_messages.join("\n")
 			redirect_to :back
 		end
 	end
@@ -21,6 +21,6 @@ private
 	end
 
 	def user_params
-		params.require(:user).permit(:repo)
+		params.require(:user).permit(:repo, :email)
 	end
 end
