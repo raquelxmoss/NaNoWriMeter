@@ -5,7 +5,7 @@ class SnippetsController < ApplicationController
 	before_action :authenticate_user!
 
 	def index
-		@snippets = User.find(params[:user_id]).snippets
+		@snippets = User.find(params[:user_id]).snippets.order('created_at DESC')
 	end
 
 	def show
@@ -16,7 +16,7 @@ class SnippetsController < ApplicationController
 	end
 
 	def create
-		snippets = get_diff(current_user.repo)
+		snippets = current_user.get_diff
 		snippets.each do |snippet|
 			unless current_user.snippets.find_by_body(snippet[:diff])
 				current_user.snippets.create(body: snippet[:diff], word_count: snippet[:diff].split.length, 
