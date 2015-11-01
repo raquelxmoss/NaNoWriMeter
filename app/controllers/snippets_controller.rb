@@ -37,7 +37,7 @@ private
 	
 	def get_diff(repo)
 		snippets = []
-		commits = HTTParty.get("https://api.github.com/repos/#{current_user.github_username}/#{repo}/commits?since=#{current_user.last_submit.to_s}")
+		commits = HTTParty.get("https://api.github.com/repos/#{current_user.github_username}/#{repo}/commits?since=#{current_user.last_submit.to_s.gsub(" ", "%20")}")
 		commits.each do |commit|
 			url = commit["html_url"]
 			commit_message = commit["commit"]["message"]
