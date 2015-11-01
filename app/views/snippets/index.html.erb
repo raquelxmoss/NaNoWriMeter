@@ -3,7 +3,7 @@
 		<li>
 			<h3><%= snippet.commit_message %></h3>
 			<p><%= snippet.created_at.to_formatted_s(:short) %></p>
-			<p><%= snippet.body %></p>
+			<p><%= simple_format(snippet.body) %></p>
 			<p>Word count: <%= snippet.word_count %></p>
 		</li>
 		<hr />
