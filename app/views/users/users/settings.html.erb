@@ -1,8 +1,8 @@
 <h1>Settings</h1>
 <%= form_for @user, url: user_update_settings_path, method: 'POST' do |f| %>
 	<p>Email address:</p>
-	<%= f.email_field :email %>
-	<p>Please enter the name of your Nanorwrimo GitHub repo</p>
-	<%= f.text_field :repo %>
+	<p><%= f.email_field :email %></p>
+	<p>Please select your Nanorwrimo GitHub repo</p>
+	<p><%= f.select(:repo, @repos, {include_blank: 'None'}) %></p>
 	<%= f.submit 'Update' %>
 <% end %>

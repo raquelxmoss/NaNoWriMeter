@@ -16,6 +16,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def get_repos
+    HTTParty.get("https://api.github.com/users/#{github_username}/repos").map {|repo| repo["name"] }
+  end
+
   def get_diff
     snippets = []
     commits = HTTParty.get(get_url)
