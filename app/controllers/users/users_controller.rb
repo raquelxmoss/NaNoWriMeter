@@ -2,6 +2,7 @@ class Users::UsersController < ApplicationController
 	before_action :get_user
 
 	def settings
+		@repos = current_user.get_repos
 	end
 
 	def update
