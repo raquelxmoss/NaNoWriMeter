@@ -1,11 +1,8 @@
-<ul>
-	<% @snippets.each do |snippet| %>
-		<li>
-			<h3><%= snippet.commit_message %></h3>
-			<p><%= snippet.created_at.to_formatted_s(:short) %></p>
-			<p><%= simple_format(snippet.body) %></p>
-			<p>Word count: <%= snippet.word_count %></p>
-		</li>
-		<hr />
-	<% end %>
-</ul>
+<% @snippets.each do |snippet| %>
+	<div class="well well-lg">
+		<h2><%= snippet.commit_message %></h2>
+		<p><strong><%= snippet.created_at.to_formatted_s(:short) %></strong></p>
+		<p><strong>Word count: <%= snippet.word_count %></strong></p>
+		<p><%= simple_format(snippet.body) %></p>
+	</div>
+<% end %>
