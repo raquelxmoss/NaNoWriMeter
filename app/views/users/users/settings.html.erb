@@ -1,8 +1,8 @@
-<h1>Settings</h1>
-<%= form_for @user, url: user_update_settings_path, method: 'POST' do |f| %>
-	<p>Email address:</p>
-	<p><%= f.email_field :email %></p>
-	<p>Please select your Nanorwrimo GitHub repo</p>
-	<p><%= f.select(:repo, @repos, {include_blank: 'None'}) %></p>
-	<%= f.submit 'Update' %>
+<%= form_for @user, url: user_update_settings_path, method: 'POST', html: { class: 'form-group m-settings-form' } do |f| %>
+	<h1 class="center-block">Settings</h1>
+	<p><strong>Email address:</strong></p>
+	<p><%= f.email_field :email, class: 'form-control' %></p>
+	<p><strong>Please select your Nanorwrimo GitHub repo</strong></p>
+	<p><%= f.select :repo, @repos, { include_blank: 'None'}, { class: 'form-control' } %></p>
+	<%= f.submit 'Update', class: 'btn btn-primary' %>
 <% end %>
