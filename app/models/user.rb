@@ -20,6 +20,16 @@ class User < ActiveRecord::Base
     HTTParty.get("https://api.github.com/users/#{github_username}/repos").map {|repo| repo["name"] }
   end
 
+
+  def update_word_count
+    files = HTTParty.get("https://api.github.com/repos/#{github_username}/#{repo}/contents")
+            .select {|f| f["name"].downcase != "README.md".downcase }
+    count = files.map {|f| HTTParty.get("https://raw.githubusercontent.com/#{github_username}/#{repo}/master/#{f["name"]}")
+                           .split(" ")
+                           .length }.reduce(:+)
+    update(word_count: count)
+  end
+
   def get_diff
     snippets = []
     commits = HTTParty.get(get_url)

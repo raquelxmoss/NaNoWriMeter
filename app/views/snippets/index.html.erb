@@ -1,3 +1,6 @@
+<% if current_user %>
+	<h2>Total Word Count: <%= current_user.word_count %></h2>
+<% end %>
 <% @snippets.each do |snippet| %>
 	<div class="well well-lg">
 		<h2><%= snippet.commit_message %></h2>
