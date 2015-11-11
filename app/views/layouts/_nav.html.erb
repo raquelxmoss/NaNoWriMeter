@@ -18,6 +18,7 @@
 	          <li><%= link_to 'Settings', user_settings_path(current_user) %></li>
 	          <li><%= link_to 'My Snippets', user_snippets_path(current_user) %></li>
 	          <li><%= link_to "Get today's work", user_snippets_path(current_user), method: 'post' %></li>
+            <li><%= link_to "Word Frequency", user_word_frequency_path(current_user) %></li>
           </ul>
         </li>
 	     <% else %>
