@@ -6,6 +6,11 @@ class User < ActiveRecord::Base
          :omniauthable, :omniauth_providers => [:github]
  has_many :snippets
 
+ STOP_WORDS = [
+                "the", "and", "of", "i", "a",
+                "to", "is", "it", "in", "on"
+              ]
+
   def self.from_omniauth(auth)
     where(
       :github_username => auth[:info][:nickname]
@@ -22,12 +27,28 @@ class User < ActiveRecord::Base
 
 
   def update_word_count
-    files = HTTParty.get("https://api.github.com/repos/#{github_username}/#{repo}/contents")
-            .select {|f| f["name"].downcase != "README.md".downcase }
+    files = get_files
     count = files.map {|f| HTTParty.get("https://raw.githubusercontent.com/#{github_username}/#{repo}/master/#{f["name"]}")
                            .split(" ")
                            .length }.reduce(:+)
     update(word_count: count)
+  end
+
+  def calculate_word_frequency
+    result = Hash.new
+    files = get_files
+    words = files.map {|f| HTTParty.get("https://raw.githubusercontent.com/#{github_username}/#{repo}/master/#{f["name"]}")
+                           .split(" ").map { |w| w.downcase.strip.gsub(/[^a-z|A-Z]/, "") } }
+                           .flatten
+                           .reject(&:empty?)
+                           .reject {|word| STOP_WORDS.include?(word) }
+    words.uniq.each { |w| result[w] = words.count(w) }
+    result.sort_by {|word, count| count }.reverse
+  end
+
+  def get_files
+    HTTParty.get("https://api.github.com/repos/#{github_username}/#{repo}/contents")
+                .select {|f| f["name"].downcase != "README.md".downcase }
   end
 
   def get_diff

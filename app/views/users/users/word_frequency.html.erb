@@ -1,0 +1,6 @@
+<h2>Total words: <%= @words.length %></h2>
+<ul>
+	<% @words.each do |word, count| %>
+		<li><%= word.capitalize %>: <%= count %></li>
+	<% end %>
+</ul>

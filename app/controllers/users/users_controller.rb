@@ -15,6 +15,10 @@ class Users::UsersController < ApplicationController
 		end
 	end
 
+	def word_frequency
+		@words = current_user.calculate_word_frequency
+	end
+
 private
 
 	def get_user
