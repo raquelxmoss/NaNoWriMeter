@@ -24,6 +24,7 @@ class SnippetsController < ApplicationController
 				current_user.update(last_submit: DateTime.now)
 			end
 		end
+		current_user.update_word_count
 		redirect_to user_snippets_path(current_user)
 	end
 
@@ -32,24 +33,4 @@ class SnippetsController < ApplicationController
 		snippet.destroy
 		redirect_to user_snippets_path(current_user)
 	end
-
-private
-	
-	def get_diff(repo)
-		snippets = []
-		commits = HTTParty.get("https://api.github.com/repos/#{current_user.github_username}/#{repo}/commits?since=#{current_user.last_submit.to_s.gsub(" ", "%20")}")
-		commits.each do |commit|
-			url = commit["html_url"]
-			commit_message = commit["commit"]["message"]
-		  diff = open("#{url}.diff") { |diff_file| diff_file.read }
-			  .split("\n")
-			  .select { |line| line.start_with?('+') }
-			  .reject { |line| line.start_with?('++') }
-			  .map { |line| line.slice(1..-1) }
-			  .join("\n")
-		  snippets <<  { diff: diff, message: commit_message }
-		end
-		snippets
-	end
-
 end
