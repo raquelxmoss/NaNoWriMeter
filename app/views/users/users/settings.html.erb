@@ -3,6 +3,8 @@
 	<p><strong>Email address:</strong></p>
 	<p><%= f.email_field :email, class: 'form-control' %></p>
 	<p><strong>Please select your Nanorwrimo GitHub repo</strong></p>
-	<p><%= f.select :repo, @repos, { include_blank: 'None'}, { class: 'form-control' } %></p>
+	<%= f.fields_for :repos do |repo_field| %>
+		<p><%= repo_field.select :name, @repos, class: 'form-control', multiple: true %></p>
+	<% end %>
 	<%= f.submit 'Update', class: 'btn btn-primary' %>
 <% end %>

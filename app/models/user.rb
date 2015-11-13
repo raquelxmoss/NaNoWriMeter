@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:github]
  has_many :snippets
+ has_many :repos
+ accepts_nested_attributes_for :repos
 
  STOP_WORDS = [
                 "the", "and", "of", "i", "a",
