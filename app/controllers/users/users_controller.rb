@@ -7,6 +7,7 @@ class Users::UsersController < ApplicationController
 
 	def update
 		if @user.update(user_params)
+			user_repos
 			flash[:notice] = "Your settings were updated"
 			redirect_to user_settings_path
 		else
@@ -26,6 +27,10 @@ private
 	end
 
 	def user_params
-		params.require(:user).permit(:repo, :email)
+		params.require(:user).permit(:email)
+	end
+
+	def user_repos
+		params[:user][:repos].reject!(&:empty?).map {|r| current_user.repos.find_or_create_by(name: r) }
 	end
 end
