@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+  require 'ostruct'
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:github]
@@ -24,7 +25,7 @@ class User < ActiveRecord::Base
   end
 
   def get_repos
-    HTTParty.get("https://api.github.com/users/#{github_username}/repos").map {|repo| repo["name"] }
+    HTTParty.get("https://api.github.com/users/#{github_username}/repos").map {|repo| Repo.new(id: nil, name: repo["name"])}
   end
 
 

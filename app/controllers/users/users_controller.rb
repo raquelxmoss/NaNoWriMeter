@@ -2,7 +2,7 @@ class Users::UsersController < ApplicationController
 	before_action :get_user
 
 	def settings
-		@repos = current_user.get_repos
+		@repos = current_user.repos + current_user.get_repos 
 	end
 
 	def update
@@ -31,6 +31,7 @@ private
 	end
 
 	def user_repos
-		params[:user][:repos].reject!(&:empty?).map {|r| current_user.repos.find_or_create_by(name: r) }
+		current_user.repos.destroy_all
+		params[:user][:repos].reject{|r| r == "" }.map {|r| current_user.repos.create(name: r) }
 	end
 end

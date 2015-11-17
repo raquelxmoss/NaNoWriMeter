@@ -3,6 +3,12 @@
 	<p><strong>Email address:</strong></p>
 	<p><%= f.email_field :email, class: 'form-control' %></p>
 	<p><strong>Please select which repos you would like to watch</strong></p>
-	<%= f.select :repos, @repos, {}, { multiple: true, class: 'form-control' } %>
+	<p>Currently watching:</p>
+	<ul>
+		<% @user.repos.pluck(:name).each do |r| %>
+			<li><%= r %></li>
+		<% end %>
+	</ul>
+	<%= f.select :repos, options_for_select(@repos.map(&:name).uniq, @user.repos.map(&:name)), {}, { multiple: true, class: 'form-control' } %>
 	<%= f.submit 'Update', class: 'btn btn-primary' %>
 <% end %>
