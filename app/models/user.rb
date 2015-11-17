@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   end
 
   def get_repos
-    HTTParty.get("https://api.github.com/users/#{github_username}/repos").map {|repo| repo["name"] }
+    HTTParty.get("https://api.github.com/users/#{github_username}/repos").map {|repo| Repo.new(name: repo["name"])}
   end
 
 
