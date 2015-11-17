@@ -9,6 +9,6 @@
 			<li><%= r %></li>
 		<% end %>
 	</ul>
-	<%= f.select :repos, options_for_select(@repos.map(&:name).uniq, @user.repos.map(&:name)), {}, { multiple: true, class: 'form-control' } %>
+	<%= f.select :repos, options_for_select(@repos.map(&:name).uniq, @user.repos.map(&:name)), {}, { multiple: true, class: 'form-control', size: 20 } %>
 	<%= f.submit 'Update', class: 'btn btn-primary' %>
 <% end %>
