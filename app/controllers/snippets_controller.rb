@@ -1,11 +1,10 @@
 require 'open-uri'
-
 class SnippetsController < ApplicationController
 
 	before_action :authenticate_user!
 
 	def index
-		@snippets = User.find(params[:user_id]).snippets.order('created_at DESC')
+		@snippets = User.find(params[:user_id]).repos.map(&:snippets).flatten
 	end
 
 	def show
@@ -16,15 +15,9 @@ class SnippetsController < ApplicationController
 	end
 
 	def create
-		snippets = current_user.get_diff
-		snippets.each do |snippet|
-			unless current_user.snippets.find_by_body(snippet[:diff])
-				current_user.snippets.create(body: snippet[:diff], word_count: snippet[:diff].split.length, 
-																		 commit_message: snippet[:message])
-				current_user.update(last_submit: DateTime.now)
-			end
-		end
-		current_user.update_word_count
+		snippets = current_user.repos.each { |r| r.get_diff }
+		current_user.repos.each { |r| r.update_word_count }
+		current_user.update(last_submit: DateTime.now)
 		redirect_to user_snippets_path(current_user)
 	end
 
