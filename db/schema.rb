@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151113015217) do
+ActiveRecord::Schema.define(version: 20151118020314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,21 +21,19 @@ ActiveRecord::Schema.define(version: 20151113015217) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "word_count"
   end
 
   add_index "repos", ["user_id"], name: "index_repos_on_user_id", using: :btree
 
   create_table "snippets", force: :cascade do |t|
-    t.integer  "user_id"
     t.text     "body"
     t.integer  "word_count"
-    t.string   "repo"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.text     "commit_message"
+    t.integer  "repo_id"
   end
-
-  add_index "snippets", ["user_id"], name: "index_snippets_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: ""
@@ -64,5 +62,4 @@ ActiveRecord::Schema.define(version: 20151113015217) do
   add_index "users", ["uid"], name: "index_users_on_uid", using: :btree
 
   add_foreign_key "repos", "users"
-  add_foreign_key "snippets", "users"
 end

@@ -1,5 +1,6 @@
 class Repo < ActiveRecord::Base
   belongs_to :user
+  has_many :snippets
 
   def update_word_count
     files = get_files
@@ -27,7 +28,6 @@ class Repo < ActiveRecord::Base
   end
 
   def get_diff
-    snippets = []
     commits = HTTParty.get(get_url)
     commits.each do |commit|
       url = commit["html_url"]
@@ -38,13 +38,12 @@ class Repo < ActiveRecord::Base
         .reject { |line| line.start_with?('++') }
         .map { |line| line.slice(1..-1) }
         .join("\n")
-      snippets <<  { diff: diff, message: commit_message }
+    Snippet.create(body: diff, commit_message: commit_message, word_count: diff.split.length, repo_id: id)
     end
-    snippets
   end
 
   def get_url
-    if last_submit?
+    if user.last_submit?
       "https://api.github.com/repos/#{user.github_username}/#{name}/commits?since=#{user.last_submit.to_s.gsub(" ", "%20")}"
     else
       "https://api.github.com/repos/#{user.github_username}/#{name}/commits"
