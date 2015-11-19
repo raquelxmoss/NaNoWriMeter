@@ -25,4 +25,8 @@ class User < ActiveRecord::Base
   def get_repos
     HTTParty.get("https://api.github.com/users/#{github_username}/repos").map {|repo| Repo.new(name: repo["name"])}
   end
+
+  def update_word_count
+    repos.map {|r| r.snippets.map {|s| s.body.length }}.flatten.reduce(:+)
+  end
 end

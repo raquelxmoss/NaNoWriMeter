@@ -17,7 +17,7 @@ class SnippetsController < ApplicationController
 	def create
 		snippets = current_user.repos.each { |r| r.get_diff }
 		current_user.repos.each { |r| r.update_word_count }
-		current_user.update(last_submit: DateTime.now)
+		current_user.update(last_submit: DateTime.now, word_count: current_user.update_word_count)
 		redirect_to user_snippets_path(current_user)
 	end
 
