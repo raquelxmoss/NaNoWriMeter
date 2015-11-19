@@ -27,6 +27,6 @@ class User < ActiveRecord::Base
   end
 
   def update_word_count
-    repos.map {|r| r.snippets.map {|s| s.body.length }}.flatten.reduce(:+)
+    repos.map {|r| r.snippets.map {|s| s.body.split(" ").length }}.flatten.reduce(:+)
   end
 end
