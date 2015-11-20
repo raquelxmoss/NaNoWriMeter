@@ -2,6 +2,11 @@ class Repo < ActiveRecord::Base
   belongs_to :user
   has_many :snippets
 
+   STOP_WORDS = [
+                "the", "and", "of", "i", "a",
+                "to", "is", "it", "in", "on"
+              ]
+
   def update_word_count
     files = get_files
     count = files.map {|f| HTTParty.get("https://raw.githubusercontent.com/#{user.github_username}/#{name}/master/#{f["name"]}")

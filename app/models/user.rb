@@ -7,11 +7,6 @@ class User < ActiveRecord::Base
  has_many :repos
  accepts_nested_attributes_for :repos
 
- STOP_WORDS = [
-                "the", "and", "of", "i", "a",
-                "to", "is", "it", "in", "on"
-              ]
-
   def self.from_omniauth(auth)
     where(
       :github_username => auth[:info][:nickname]
