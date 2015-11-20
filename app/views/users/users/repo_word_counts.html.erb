@@ -2,7 +2,7 @@
 </div>
 
 <%= javascript_tag do %>
-	var data = <%= current_user.repos.map(&:word_count) %>
+	var data = <%= @counts %>
 	var x = d3.scale.linear()
 			.domain([0, d3.max(data)])
 			.range([0, 100]);
