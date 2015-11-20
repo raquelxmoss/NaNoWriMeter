@@ -17,7 +17,7 @@ class Users::UsersController < ApplicationController
 	end
 
 	def word_frequency
-		@words = current_user.calculate_word_frequency
+		@words = current_user.repos.map {|r| r.calculate_word_frequency }
 	end
 
 	def repo_word_counts

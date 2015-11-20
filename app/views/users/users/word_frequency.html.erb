@@ -1,6 +1,10 @@
 <h2>Total words: <%= @words.length %></h2>
 <ul>
-	<% @words.each do |word, count| %>
-		<li><%= word.capitalize %>: <%= count %></li>
+	<% @words.each do |repo| %>
+	<div class="col-sm-4">
+		<% repo.each do |pair| %>
+			<li><%= pair[0].capitalize %>: <%= pair[1] %></li>
+		<% end %>
+		</div>
 	<% end %>
 </ul>
