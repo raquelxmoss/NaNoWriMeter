@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   	get 'settings', to: 'users/users#settings', as: :settings
   	post 'settings', to: 'users/users#update', as: :update_settings
     get 'word-frequency', to: 'users/users#word_frequency', as: :word_frequency
+    get 'word-counts', to: 'users/users#repo_word_counts', as: :word_counts
   end
 
   devise_for :users, :controllers => { :omniauth_callbacks => 'users/omniauth_callbacks' }

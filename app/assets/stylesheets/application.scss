@@ -14,3 +14,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "user.scss";
+
+.chart div {
+	background: blue;
+}

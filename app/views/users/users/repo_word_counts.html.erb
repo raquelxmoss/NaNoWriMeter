@@ -1,0 +1,15 @@
+<div class="chart">
+</div>
+
+<%= javascript_tag do %>
+	var data = <%= @counts %>
+	var x = d3.scale.linear()
+			.domain([0, d3.max(data)])
+			.range([0, 100]);
+	d3.select(".chart")
+	  .selectAll("div")
+	    .data(data)
+	  .enter().append("div")
+	    .style("width", function(d) { return x(d) * 10 + "px"; })
+	    .text(function(d) { return d; });
+<% end %>
