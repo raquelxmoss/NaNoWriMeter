@@ -4,7 +4,13 @@ class Repo < ActiveRecord::Base
 
    STOP_WORDS = [
                 "the", "and", "of", "i", "a",
-                "to", "is", "it", "in", "on"
+                "to", "is", "it", "in", "on",
+                "an", "as", "be", "at", "but",
+                "by", "do", "does", "for", "had",
+                "i'm", "i'd", "i'll", "i've", "if",
+                "into", "its", "it's", "not", "or",
+                "our", "so", "then", "too", "up", "we",
+                "you"
               ]
 
   def update_word_count
